@@ -1,5 +1,6 @@
 package io.tigh.searx.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import io.tigh.searx.R
 import io.tigh.searx.api.Searxng
+import io.tigh.searx.ui.searchresults.SearchResultsActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,11 +56,13 @@ class SearchFragment : Fragment() {
         mSearchIcon.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    Log.d(requireActivity().javaClass.name,"pressed")
                     false
                 }
                 MotionEvent.ACTION_UP -> {
-                    Log.d(requireActivity().javaClass.name,"lifted")
+                    val i = with(Intent(requireActivity(), SearchResultsActivity::class.java)) {
+                        putExtra("searxng_search_term", mSearchBar.text.toString())
+                    }
+                    startActivity(i)
                     false
                 }
                 else -> false
@@ -68,10 +72,10 @@ class SearchFragment : Fragment() {
         mSearchBar.setOnEditorActionListener { v, actionId, event ->
             when(actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    Searxng("http://search.local").apply {
-                        q = mSearchBar.text.toString()
-                        format = "json"
-                    }.search(requireActivity())
+                    val i = with(Intent(requireActivity(), SearchResultsActivity::class.java)) {
+                        putExtra("searxng_search_term", mSearchBar.text.toString())
+                    }
+                    startActivity(i)
                     return@setOnEditorActionListener true
                 }
             }
