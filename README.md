@@ -8,6 +8,6 @@ Basically unusable atm (and only works for my own personal instance) but I've pl
 - [x] Initial search results.
 - [ ] Webview by default.
 - [ ] Instance picker.
-- [ ] Custom istance.
+- [ ] Custom instance support.
 - [ ] Settings.
 - [ ] F-Droid release.
